@@ -1,18 +1,37 @@
-const express = require('express');
-const app = express();
-const port = process.env.PORT || 3000;
+const { addonBuilder, serveHTTP } = require("stremio-addon-sdk");
 
-// JSON parsing
-app.use(express.json());
+const manifest = require("./manifest");
 
-// Mount routes
-const catalogRoutes = require('./src/routes/all');
-app.use('/api', catalogRoutes);
+const builder = new addonBuilder(manifest);
 
-app.get('/', (req, res) => {
-  res.send('Anime Catalog API');
+builder.defineCatalogHandler(async () => {
+
+    return {
+
+        metas: []
+
+    }
+
 });
 
-app.listen(port, () => {
-  console.log(`Anime Catalog listening on port ${port}`);
+builder.defineMetaHandler(async () => {
+
+    return {
+
+        meta: {}
+
+    }
+
 });
+
+serveHTTP(builder.getInterface(), {
+
+    port: 7000
+
+});
+
+console.log("");
+
+console.log("Anime Catalog iniciado");
+
+console.log("http://localhost:7000/manifest.json");

@@ -1,20 +1,21 @@
 # Anime Catalog
 
-Starter API project that aggregates anime metadata (placeholder).
+Addon para o Stremio utilizando a API da AniList.
 
-How to run:
+## instalar
 
-1. Install dependencies
+```bash
+npm install
+```
 
-   npm install
+executar
 
-2. Start server
+```bash
+npm start
+```
 
-   npm start
+manifest
 
-API endpoints:
-- GET / -> health
-- GET /api/all -> list all
-- GET /api/last-season -> last season (placeholder)
-- GET /api/season/:season -> list for a season
-- GET /api/genres -> list genres
+```
+http://localhost:7000/manifest.json
+```
