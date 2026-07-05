@@ -4,11 +4,52 @@ const manifest = require("./manifest");
 
 const builder = new addonBuilder(manifest);
 
-builder.defineCatalogHandler(async () => {
+const seasonCatalog = require("./src/catalog/season");
+const lastSeasonCatalog = require("./src/catalog/lastSeason");
 
-    return {
+builder.defineCatalogHandler(async ({ id, extra }) => {
 
-        metas: []
+    try {
+
+        const page = Number(extra?.skip || 0) / 50 + 1;
+
+        switch (id) {
+
+            case "season":
+
+                return {
+
+                    metas: await seasonCatalog.getCurrentSeason(page)
+
+                };
+
+            case "lastSeason":
+
+                return {
+
+                    metas: await lastSeasonCatalog.getLastSeason(page)
+
+                };
+
+            default:
+
+                return {
+
+                    metas: []
+
+                };
+
+        }
+
+    } catch (err) {
+
+        console.error(err);
+
+        return {
+
+            metas: []
+
+        };
 
     }
 
